@@ -14,14 +14,15 @@ class Area:
         self.id = id
         self.name = name
         self.polygon = polygon_from_string(points)
-        self.costToAreas = {}
+        self.cost_to_areas = {}
 
     def serialize(self):
+        magic_cost_to_areas = dict((k, round(v + magic_cost() / 2)) for (k, v) in self.cost_to_areas.items())
         return {
             'id': self.id,
             'name': self.name,
             'polygon': self.polygon.to_wkt(),
-            'costToAreas': self.costToAreas
+            'costToAreas': magic_cost_to_areas
         }
 
 
@@ -40,9 +41,9 @@ def init_costs():
     for fromIdx, fromArea in enumerate(list):
         for toIdx in range(0, total):
             if toIdx != fromIdx:
-                cost = round(random.randint(80, 120) + magic_cost() / 2)
-                fromArea.costToAreas[list[toIdx].id] = cost
-                list[toIdx].costToAreas[fromArea.id] = cost
+                cost = random.randint(80, 120)
+                fromArea.cost_to_areas[list[toIdx].id] = cost
+                list[toIdx].cost_to_areas[fromArea.id] = cost
 
 
 def polygon_from_string(points_string):
