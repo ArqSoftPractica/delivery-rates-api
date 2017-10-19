@@ -2,6 +2,8 @@ import os
 import csv
 import random
 from shapely.wkt import loads
+from magic_cost import magic_cost
+
 
 list = []
 
@@ -38,7 +40,9 @@ def init_costs():
     for fromIdx, fromArea in enumerate(list):
         for toIdx in range(0, total):
             if toIdx != fromIdx:
-                fromArea.costToAreas[list[toIdx].id] = random.randint(10, 100)
+                cost = round(random.randint(80, 120) + magic_cost() / 2)
+                fromArea.costToAreas[list[toIdx].id] = cost
+                list[toIdx].costToAreas[fromArea.id] = cost
 
 
 def polygon_from_string(points_string):
