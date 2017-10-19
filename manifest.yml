@@ -1,0 +1,10 @@
+applications:
+- name: delivery-rates-api
+  instances: 1
+  memory: 512M
+  disk_quota: 1024M
+  random-route: true
+  health-check-type: process
+  docker:
+    image: charlyvega/delivery-rates-api
+  stack: cflinuxfs2
